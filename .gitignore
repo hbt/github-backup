@@ -1,3 +1,6 @@
+#netbeans
+nbproject/
+
 # rcov generated
 coverage
 coverage.data
