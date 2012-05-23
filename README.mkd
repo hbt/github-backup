@@ -1,8 +1,8 @@
-= github-backup
+# github-backup
 
 Command-line tool to backup data from github
 
-== Copies 
+## Copies 
 
 * repos
 * forks
@@ -11,10 +11,10 @@ Command-line tool to backup data from github
 * wiki
 
 
-== Usage 
+## Usage 
 `backup.rb *githubUsername* *githubPassword* [--github-user=XXX] [--repo=XXX] [--all-branches] [--all-forks] [--issues] [--wiki]`
 
-== Copyright
+## Copyright
 
 Copyright (c) 2012 hbt. See LICENSE.txt for
 further details.
