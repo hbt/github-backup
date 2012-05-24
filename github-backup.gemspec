@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "bin/github-backup",
+    "github-backup.gemspec",
     "lib/github-backup.rb",
     "lib/github/repos.rb",
     "lib/utils/options.rb",
