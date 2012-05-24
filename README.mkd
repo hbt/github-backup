@@ -25,9 +25,9 @@ github-backup -u hbt -o /tmp
     -f, --forks                      Optional: fetch all forks
     -b, --init-branches              Optional: init all branches
     -i, --dump-issues                Optional: dump all issues
-        --dump-issues-filename FILENAME
-                                     Optional: dump issues filename
     -w, --wiki                       Optional: dump wiki
+    -C, --compress                   Optional: run gc to compress git repo
+    -v, --version                    Displays current version
     -h, --help                       Displays this screen
 `
 

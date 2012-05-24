@@ -49,7 +49,7 @@ github-backup -u hbt -o /tmp \n\n"
                         self.options[:wiki] = true
                     end
 
-                    opts.on( '-C', '--compress', 'Optional: run repack to compress git repo' ) do
+                    opts.on( '-C', '--compress', 'Optional: run gc to compress git repo' ) do
                         self.options[:repack] = true
                     end
 
