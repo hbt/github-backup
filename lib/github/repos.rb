@@ -24,38 +24,45 @@ module GitHubBackup
 
             def backup_repo(repo)
                 Dir.chdir(opts[:bakdir])
-                repo_path = "#{opts[:bakdir]}/#{repo['name']}"
-                # clone
-                %x{git clone #{repo['ssh_url']}} unless File.exists?(repo_path)
-                Dir.chdir(repo_path)
 
-                # run pull
-                %x{git fetch origin}
+                repo['repo_path'] = "#{opts[:bakdir]}/#{repo['name']}"
 
-                # do we get all forks
-                if opts[:forks] and repo['forks'] > 1
-                    (1..100).each do |i|
-                        forks = json("/repos/#{opts[:username]}/#{repo['name']}/forks?page=#{i}&per_page=100")
-                        forks.each do |f|
-                            %x{git remote add #{f['owner']['login']} #{f['git_url']}}
-                            %x{git fetch #{f['owner']['login']}}
-                        
-                        end
-                        break if forks.size == 0
-                    end
-                end
-
-                %x{for remote in `git branch -r `; do git branch --track $remote; done} if opts[:init_branches]
-
-                repo['repo_path'] = repo_path
+                clone repo unless File.exists?(repo['repo_path'])
+                fetch_changes repo
+                get_forks repo if opts[:forks] and repo['forks'] > 1
+                create_all_branches repo if opts[:init_branches]
                 dump_issues repo if opts[:issues] && repo['has_issues']
                 dump_wiki repo if opts[:wiki] && repo['has_wiki']
                 repack repo if opts[:repack]
             end
-
-            def repack(repo)
+            
+            def clone(repo)
                 Dir.chdir(repo['repo_path'])
-                %x{git gc --aggressive --auto}
+                %x{git clone #{repo['ssh_url']}}
+            end
+
+            def fetch_changes(repo)
+                Dir.chdir(repo['repo_path']) 
+                %x{git fetch origin}
+            end
+            
+            def get_forks(repo)
+                Dir.chdir(repo['repo_path'])
+
+                # do we get all forks
+                (1..100).each do |i|
+                    forks = json("/repos/#{opts[:username]}/#{repo['name']}/forks?page=#{i}&per_page=100")
+                    forks.each do |f|
+                        %x{git remote add #{f['owner']['login']} #{f['git_url']}}
+                        %x{git fetch #{f['owner']['login']}}
+                    end
+                    break if forks.size == 0
+                end
+            end
+
+            def create_all_branches(repo)
+                Dir.chdir(repo['repo_path']) 
+                %x{for remote in `git branch -r `; do git branch --track $remote; done} 
             end
 
             def dump_issues(repo)
@@ -82,6 +89,11 @@ module GitHubBackup
                     Dir.chdir(wiki_path)
                     %x{git fetch origin}
                 end
+            end
+
+            def repack(repo)
+                Dir.chdir(repo['repo_path'])
+                %x{git gc --aggressive --auto}
             end
 
             def json(url)
