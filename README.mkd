@@ -11,8 +11,25 @@ Command-line tool to backup data from github
 * wiki
 
 
-## Usage 
-`backup.rb *githubUsername* *githubPassword* [--github-user=XXX] [--repo=XXX] [--all-branches] [--all-forks] [--issues] [--wiki]`
+## Usage
+`
+Usage: github-backup -u [username] -o [dir]
+e.g
+github-backup -u hbt -o /tmp
+
+    -e, --email EMAIL                Optional: GitHub email/username. Required for private repos
+    -p, --password PASSWORD          Optional: GitHub password. Required for private repos
+    -u, --username USERNAME          *Required: GitHub username
+    -o, --output-dir DIR             *Required: Backup directory
+    -r, --repository-name NAME       Optional: limit to this repository name
+    -f, --forks                      Optional: fetch all forks
+    -b, --init-branches              Optional: init all branches
+    -i, --dump-issues                Optional: dump all issues
+        --dump-issues-filename FILENAME
+                                     Optional: dump issues filename
+    -w, --wiki                       Optional: dump wiki
+    -h, --help                       Displays this screen
+`
 
 ## Copyright
 
