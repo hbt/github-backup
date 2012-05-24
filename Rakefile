@@ -21,6 +21,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{Command-line tool designed to back up repos from github}
   gem.email = "hassenbentanfous@gmail.com"
   gem.authors = ["hbt"]
+  gem.executables = ["github-backup"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
