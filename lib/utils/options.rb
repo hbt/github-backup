@@ -9,13 +9,9 @@ module GitHubBackup
 
                 optparse = OptionParser.new do|opts|
                     
-                    # TODO: update usage
                     opts.banner = "Usage: github-backup -u [username] -o [dir]
 e.g
 github-backup -u hbt -o /tmp \n\n"
-                    #        backup.rb *githubUsername* *githubPassword* [--github-user=XXX] [--repo=XXX] [--all-branches] [--all-forks] [--issues] [--wiki]
-                    #        backup.rb [--github-user=XXX] [--repo=XXX] [--all-branches] [--all-forks] [--issues] [--wiki]
-                    #        backup.rb --username=XXX --password=XXX [--github-user=XXX] --repo=XXX --all-branches --all-forks --issues --wiki
 
                     opts.on( '-e', '--email EMAIL', 'Optional: GitHub email/username. Required for private repos') do |f|
                         self.options[:email] = f
@@ -47,10 +43,6 @@ github-backup -u hbt -o /tmp \n\n"
 
                     opts.on( '-i', '--dump-issues', 'Optional: dump all issues' ) do
                         self.options[:issues] = true
-                    end
-
-                    opts.on( nil, '--dump-issues-filename FILENAME', 'Optional: dump issues filename' ) do |f|
-                        self.options[:issues_filename] = f
                     end
 
                     opts.on( '-w', '--wiki', 'Optional: dump wiki' ) do

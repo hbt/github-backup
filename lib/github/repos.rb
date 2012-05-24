@@ -72,8 +72,10 @@ module GitHubBackup
                 Dir.chdir(opts[:bakdir])
                 wiki_path = "#{opts[:bakdir]}/#{repo['name']}.wiki"
                 %x{git clone git@github.com:#{repo['owner']['login']}/#{repo['name']}.wiki.git} unless File.exists?(wiki_path)
-                Dir.chdir(wiki_path)
-                %x{git fetch origin}
+                if File.exists? wiki_path
+                    Dir.chdir(wiki_path)
+                    %x{git fetch origin}
+                end
             end
 
             def json(url)
