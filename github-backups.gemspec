@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "github-backups"
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["hbt"]
@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
     "VERSION",
     "bin/github-backup",
     "github-backup.gemspec",
+    "github-backups.gemspec",
     "lib/github-backup.rb",
     "lib/github/repos.rb",
     "lib/utils/options.rb",
