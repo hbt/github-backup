@@ -50,6 +50,12 @@ module GitHubBackup
                 repo['repo_path'] = repo_path
                 dump_issues repo if opts[:issues] && repo['has_issues']
                 dump_wiki repo if opts[:wiki] && repo['has_wiki']
+                repack repo if opts[:repack]
+            end
+
+            def repack(repo)
+                Dir.chdir(repo['repo_path'])
+                %x{git gc --aggressive --auto}
             end
 
             def dump_issues(repo)
