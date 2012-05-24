@@ -14,7 +14,7 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "github-backup"
+  gem.name = "github-backups"
   gem.homepage = "http://github.com/hbt/github-backup"
   gem.license = "MIT"
   gem.summary = %Q{Backup all repos, wiki, issues, forks, branches from github}
