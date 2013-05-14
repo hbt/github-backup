@@ -18,7 +18,7 @@ module GitHubBackup
                       url ="/user/repos"
                     else
                       if opts[:passwd]
-                        url ="/user/repos"
+                        url = "/user/repos"
                       else
                         url = "/users/#{opts[:username]}/repos"
                       end
