@@ -11,7 +11,9 @@ module GitHubBackup
             def backup_repos()
                 # get all repos
                 (1..100).each do |i|
-                    if opts[:passwd]
+                    if opts[:organization]
+                      url = "/orgs/#{opts[:organization]}/repos"
+                    elsif opts[:passwd]
                       url ="/user/repos"
                     else
                       url = "/users/#{opts[:username]}/repos"
