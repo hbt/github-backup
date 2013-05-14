@@ -11,7 +11,7 @@ module GitHubBackup
             def backup_repos()
                 # get all repos
                 (1..100).each do |i|
-                    repos = json("/users/#{opts[:username]}/repos?page=#{i}per_page=100")
+                    repos = json("/user/repos?page=#{i}per_page=100")
                     repos.each do |f|
                         # do we limit to a specific repo?
                         next unless f['name'] == opts[:reponame] if opts[:reponame]
