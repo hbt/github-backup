@@ -37,7 +37,6 @@ module GitHubBackup
             end
             
             def clone(repo)
-                Dir.chdir(repo['repo_path'])
                 %x{git clone #{repo['ssh_url']}}
             end
 
