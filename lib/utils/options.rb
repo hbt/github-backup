@@ -54,7 +54,9 @@ github-backup -u hbt -o /tmp \n\n"
                     end
 
                     opts.on( '-v', '--version', 'Displays current version ' ) do
-                        #TODO
+                        version = File.expand_path(File.dirname(__FILE__) + '../../../VERSION')
+                        p "Version: " + File.read(version)[0...-1] if File.exists? version
+                        exit
                     end
 
                     opts.on( '-h', '--help', 'Displays this screen' ) do
