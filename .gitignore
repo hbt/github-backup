@@ -9,7 +9,6 @@ coverage.data
 rdoc
 
 # yard generated
-doc
 .yardoc
 
 # bundler
