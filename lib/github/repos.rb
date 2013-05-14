@@ -98,7 +98,7 @@ module GitHubBackup
 
             def json(url)
                 auth = {:username => opts[:username], :password => opts[:passwd]} if opts[:username] and opts[:passwd]
-                HTTParty.get('https://api.github.com' << url, :basic_auth => auth).parsed_response
+                HTTParty.get('https://api.github.com' << url, :basic_auth => auth, :headers => { "User-Agent" => "Get out of the way, Github" }).parsed_response
             end
         end
     end
