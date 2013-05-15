@@ -60,7 +60,6 @@ module GitHubBackup
             def get_forks(repo)
                 Dir.chdir(repo['repo_path'])
 
-                puts "X" * 80
                 # do we get all forks
                 (1..100).each do |i|
                     if opts[:organization]
@@ -81,7 +80,7 @@ module GitHubBackup
 
             def create_all_branches(repo)
                 Dir.chdir(repo['repo_path']) 
-                %x{for remote in `git branch -r `; do git branch --track $remote; done} 
+                %x{for remote in `git branch -r`; do git branch --track $remote; done}
             end
 
             def dump_issues(repo)
