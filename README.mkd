@@ -36,3 +36,7 @@ github-backup -u hbt -o /tmp
 Copyright (c) 2012 hbt. See LICENSE.txt for
 further details.
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/hbt/github-backup/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
