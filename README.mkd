@@ -17,9 +17,9 @@ Usage: github-backup -u [username] -o [dir]
 e.g
 github-backup -u hbt -o /tmp
 
-    -p, --password PASSWORD          Optional: GitHub password. Required for private repos
     -u, --username USERNAME          *Required: GitHub username
     -o, --output-dir DIR             *Required: Backup directory
+    -p, --password PASSWORD          Optional: GitHub password. Required for private repos
     -r, --repository-name NAME       Optional: limit to this repository name
     -f, --forks                      Optional: fetch all forks
     -b, --init-branches              Optional: init all branches

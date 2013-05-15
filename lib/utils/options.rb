@@ -13,9 +13,6 @@ module GitHubBackup
 e.g
 github-backup -u hbt -o /tmp \n\n"
 
-                    opts.on( '-p', '--password PASSWORD', 'Optional: GitHub password. Required for private repos') do |f|
-                        self.options[:passwd] = f
-                    end
 
                     opts.on( '-u', '--username USERNAME', '*Required: GitHub username') do |f|
                         self.options[:username] = f
@@ -23,6 +20,10 @@ github-backup -u hbt -o /tmp \n\n"
 
                     opts.on( '-o', '--output-dir DIR', '*Required: Backup directory') do |f|
                         self.options[:bakdir] = File.expand_path(f)
+                    end
+
+                    opts.on( '-p', '--password PASSWORD', 'Optional: GitHub password. Required for private repos') do |f|
+                        self.options[:passwd] = f
                     end
 
                     opts.on( '-r', '--repository-name NAME', 'Optional: limit to this repository name' ) do |f|
