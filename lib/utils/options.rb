@@ -13,10 +13,6 @@ module GitHubBackup
 e.g
 github-backup -u hbt -o /tmp \n\n"
 
-                    opts.on( '-e', '--email EMAIL', 'Optional: GitHub email/username. Required for private repos') do |f|
-                        self.options[:email] = f
-                    end
-
                     opts.on( '-p', '--password PASSWORD', 'Optional: GitHub password. Required for private repos') do |f|
                         self.options[:passwd] = f
                     end

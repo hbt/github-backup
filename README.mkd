@@ -17,7 +17,6 @@ Usage: github-backup -u [username] -o [dir]
 e.g
 github-backup -u hbt -o /tmp
 
-    -e, --email EMAIL                Optional: GitHub email/username. Required for private repos
     -p, --password PASSWORD          Optional: GitHub password. Required for private repos
     -u, --username USERNAME          *Required: GitHub username
     -o, --output-dir DIR             *Required: Backup directory
