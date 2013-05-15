@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rm *.gem
+gem build github-backups.gemspec
+gem push *.gem
+
