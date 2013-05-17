@@ -17,11 +17,7 @@ module GitHubBackup
                     elsif opts[:passwd]
                       url ="/user/repos"
                     else
-                      if opts[:passwd]
-                        url = "/user/repos"
-                      else
-                        url = "/users/#{opts[:username]}/repos"
-                      end
+                      url = "/users/#{opts[:username]}/repos"
                     end
                     repos = json("#{url}?page=#{i}per_page=100")
                     repos.each do |f|
