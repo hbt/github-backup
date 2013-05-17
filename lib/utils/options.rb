@@ -26,6 +26,10 @@ github-backup -u hbt -o /tmp \n\n"
                         self.options[:passwd] = f
                     end
 
+                    opts.on( '-O', '--organization ORGANIZATION_NAME', 'Optional: Organization name of the organization to fetch repositories from') do |f|
+                      self.options[:organization] = f
+                    end
+
                     opts.on( '-r', '--repository-name NAME', 'Optional: limit to this repository name' ) do |f|
                         self.options[:reponame] = f
                     end

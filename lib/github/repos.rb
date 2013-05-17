@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'pp'
 
 module GitHubBackup
     module GitHub
@@ -11,7 +12,9 @@ module GitHubBackup
             def backup_repos()
                 # get all repos
                 (1..100).each do |i|
-                    if opts[:passwd]
+                    if opts[:organization]
+                      url = "/orgs/#{opts[:organization]}/repos"
+                    elsif opts[:passwd]
                       url ="/user/repos"
                     else
                       url = "/users/#{opts[:username]}/repos"
@@ -55,9 +58,16 @@ module GitHubBackup
 
                 # do we get all forks
                 (1..100).each do |i|
-                    forks = json("/repos/#{opts[:username]}/#{repo['name']}/forks?page=#{i}&per_page=100")
+                    if opts[:organization]
+                      url = "/repos/#{opts[:organization]}/#{repo['name']}/forks"
+                    else
+                      url = "/repos/#{opts[:username]}/#{repo['name']}/forks"
+                    end
+                    forks = json("#{url}?page=#{i}&per_page=100")
+                    pp forks
                     forks.each do |f|
-                        %x{git remote add #{f['owner']['login']} #{f['git_url']}}
+                      puts "Adding remote #{f['owner']['login']} from #{f['ssh_url']}.."
+                        %x{git remote add #{f['owner']['login']} #{f['ssh_url']}}
                         %x{git fetch #{f['owner']['login']}}
                     end
                     break if forks.size == 0
@@ -66,7 +76,7 @@ module GitHubBackup
 
             def create_all_branches(repo)
                 Dir.chdir(repo['repo_path']) 
-                %x{for remote in `git branch -r `; do git branch --track $remote; done} 
+                %x{for remote in `git branch -r`; do git branch --track $remote; done}
             end
 
             def dump_issues(repo)
@@ -77,7 +87,12 @@ module GitHubBackup
 
                 content = ''
                 (1..100).each do |i|
-                    issues = json("/repos/#{opts[:username]}/#{repo['name']}/issues?page=#{i}&per_page=100")
+                    if opts[:organization]
+                      url = "/repos/#{opts[:organization]}/#{repo['name']}/issues"
+                    else
+                      url = "/repos/#{opts[:username]}/#{repo['name']}/issues"
+                    end
+                    issues = json("#{url}?page=#{i}&per_page=100")
                     content += issues.join("")
                     break if issues.size == 0
                 end
