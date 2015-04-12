@@ -8,7 +8,7 @@ module GitHubBackup
                 self.options ||= {}
 
                 optparse = OptionParser.new do|opts|
-                    
+
                     opts.banner = "Usage: github-backup -u [username] -o [dir]
 e.g
 github-backup -u hbt -o /tmp \n\n"
@@ -56,12 +56,12 @@ github-backup -u hbt -o /tmp \n\n"
 
                     opts.on( '-v', '--version', 'Displays current version ' ) do
                         version = File.expand_path(File.dirname(__FILE__) + '../../../VERSION')
-                        p "Version: " + File.read(version)[0...-1] if File.exists? version
+                        puts "Version: " + File.read(version)[0...-1] if File.exists? version
                         exit
                     end
 
                     opts.on( '-h', '--help', 'Displays this screen' ) do
-                        p opts
+                        puts opts
                         exit
                     end
                 end
