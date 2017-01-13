@@ -4,6 +4,7 @@
 Command-line tool to backup data from github
 
 
+// TODO(hbt) ENHANCE review list of stuff copied
 ## Copies 
 
 * user and organization repositories (with submodules)
@@ -39,23 +40,27 @@ bundle
 // TODO(hbt) ENHANCE update usage
 ## Usage
 
+```
 Usage: github-backup -u [username] -o [dir]
 e.g
-github-backup -u hbt -o /tmp
+github-backup -u hbt -o /tmp 
 
     -u, --username USERNAME          *Required: GitHub username
     -o, --output-dir DIR             *Required: Backup directory
     -p, --password PASSWORD          Optional: GitHub password. Required for private repos
+    -O ORGANIZATION_NAME,            Optional: Organization name of the organization to fetch repositories from
+        --organization
     -r, --repository-name NAME       Optional: limit to this repository name
-    -O, --organization NAME	          Optional: Organization name to use for fetching repositories, instead of the user
     -f, --forks                      Optional: fetch all forks
-    -b, --init-branches              Optional: init all branches
     -i, --dump-issues                Optional: dump all issues
     -w, --wiki                       Optional: dump wiki
-    -C, --compress                   Optional: run gc to compress git repo
-    -v, --version                    Displays current version
+    -D, --debug                      Optional: enable logging debug messages
+    -v, --version                    Displays current version 
     -h, --help                       Displays this screen
 
+```
+
+// TODO(hbt) ENHANCE add examples of usage + explanations
 
 ## Copyright
 

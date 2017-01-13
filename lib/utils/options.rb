@@ -39,11 +39,11 @@ github-backup -u hbt -o /tmp \n\n"
             self.options[:forks] = true
           end
 
-          opts.on('-i', '--dump-issues', 'Optional: dump all issues') do
+          opts.on('-i', '--dump-issues', 'Optional: dump all issues into a file') do
             self.options[:issues] = true
           end
 
-          opts.on('-w', '--wiki', 'Optional: dump wiki') do
+          opts.on('-w', '--wiki', 'Optional: clone repository wiki') do
             self.options[:wiki] = true
           end
 
