@@ -72,10 +72,7 @@ module GitHubBackup
         create_all_branches repo if opts[:init_branches]
         dump_issues repo if opts[:issues] && repo['has_issues']
         dump_wiki repo if opts[:wiki] && repo['has_wiki']
-        # // TODO(hbt) ENHANCE remove repack
-        repack repo if opts[:repack]
-
-
+        
         logger.info "[done] backup repository #{repo['full_name']}"
       end
 
@@ -153,12 +150,6 @@ module GitHubBackup
           Dir.chdir(wiki_path)
           cmd "git fetch --all"
         end
-      end
-
-      def repack(repo)
-        Dir.chdir(repo['repo_path'])
-        # // TODO(hbt) ENHANCE remove this
-        %x{git gc --aggressive --auto}
       end
 
       def cmd(line)
