@@ -20,6 +20,9 @@ Command-line tool to backup data from github
 ## Installation
 
 ```
+# git version 1.9.1
+git --version
+
 # compatible with latest versions but if you run into issues. This is the official version
 rvm use ruby-1.9.3-p547
 ruby -v

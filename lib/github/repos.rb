@@ -51,7 +51,6 @@ module GitHubBackup
           repos = json("#{url}?page=#{i}&per_page=100")
           repos.each do |f|
             # do we limit to a specific repo?
-            logger.debug "processing - #{f['name']}"
             next unless f['name'] == opts[:reponame] if opts[:reponame]
             next if f['fork'] == true if opts[:skip_forked]
             backup_repo f
@@ -78,17 +77,14 @@ module GitHubBackup
       end
 
       def clone(repo)
-        # // TODO(hbt) ENHANCE git clone recursive with submodules init?
         logger.debug "clone #{repo['ssh_url']}"
-        puts cmd "git clone #{repo['ssh_url']}"
+        puts cmd "git clone --recursive #{repo['ssh_url']}"
       end
 
       def fetch_changes(repo)
         logger.info "fetch all remotes"
         Dir.chdir(repo['repo_path'])
-        # // TODO(hbt) ENHANCE use git fetch --all to include forks remotes -- also includes submodules
-        # // TODO(hbt) ENHANCE fix hanging
-        cmd "git fetch --all"
+        cmd "git fetch --all --recurse-submodules=yes"
       end
 
       def get_forks(repo)
