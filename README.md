@@ -1,10 +1,8 @@
 # github-backup
 
-// TODO(hbt) ENHANCE update description
 Command-line tool to backup data from github
 
 
-// TODO(hbt) ENHANCE review list of stuff copied
 ## Copies 
 
 * user and organization repositories (with submodules)
@@ -38,7 +36,6 @@ bundle
 ```
 
 
-// TODO(hbt) ENHANCE update usage
 ## Usage
 
 ```
@@ -53,15 +50,26 @@ github-backup -u hbt -o /tmp
         --organization
     -r, --repository-name NAME       Optional: limit to this repository name
     -f, --forks                      Optional: fetch all forks
-    -i, --dump-issues                Optional: dump all issues
-    -w, --wiki                       Optional: dump wiki
+    -F, --skip-forked                Optional: skip forked repositories.
+    -i, --dump-issues                Optional: dump all issues into a file
+    -w, --wiki                       Optional: clone repository wiki
     -D, --debug                      Optional: enable logging debug messages
     -v, --version                    Displays current version 
     -h, --help                       Displays this screen
 
 ```
 
-// TODO(hbt) ENHANCE add examples of usage + explanations
+## Examples
+
+```
+# retrieves all repositories and for each repo, its forks
+github-backup -u hbt -p XXX --forks -o /tmp
+
+
+# ignores any repositories I forked
+github-backup -u hbt -p XXX --skip-forked -o /tmp
+
+```
 
 ## Copyright
 
