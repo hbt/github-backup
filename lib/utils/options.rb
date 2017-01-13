@@ -39,10 +39,6 @@ github-backup -u hbt -o /tmp \n\n"
             self.options[:forks] = true
           end
 
-          opts.on('-b', '--init-branches', 'Optional: init all branches') do
-            self.options[:init_branches] = true
-          end
-
           opts.on('-i', '--dump-issues', 'Optional: dump all issues') do
             self.options[:issues] = true
           end

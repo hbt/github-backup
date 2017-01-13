@@ -69,7 +69,6 @@ module GitHubBackup
         clone repo unless File.exists?(repo['repo_path'])
         get_forks repo if opts[:forks] and repo['forks'] > 1
         fetch_changes repo
-        create_all_branches repo if opts[:init_branches]
         dump_issues repo if opts[:issues] && repo['has_issues']
         dump_wiki repo if opts[:wiki] && repo['has_wiki']
         
@@ -110,12 +109,6 @@ module GitHubBackup
           end
           break if forks.size == 0
         end
-      end
-
-      def create_all_branches(repo)
-        Dir.chdir(repo['repo_path'])
-        # // TODO(hbt) ENHANCE remove this feature
-        %x{for remote in `git branch -r`; do git branch --track $remote; done}
       end
 
       def dump_issues(repo)
