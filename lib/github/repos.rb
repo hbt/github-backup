@@ -39,7 +39,6 @@ module GitHubBackup
 
       def backup_repos()
         # get all repos
-
         (1..100).each do |i|
           if opts[:organization]
             url = "/orgs/#{opts[:organization]}/repos"
@@ -91,7 +90,7 @@ module GitHubBackup
         Dir.chdir(repo['repo_path'])
         # // TODO(hbt) ENHANCE use git fetch --all to include forks remotes -- also includes submodules
         # // TODO(hbt) ENHANCE fix hanging
-        puts cmd "git fetch --all"
+        cmd "git fetch --all"
       end
 
       def get_forks(repo)
@@ -110,7 +109,7 @@ module GitHubBackup
           forks = json("#{url}?page=#{i}&per_page=100")
           logger.info "for each fork, add remotes"
           forks.each do |f|
-            cmd "git remote add #{f['owner']['login']} #{f['ssh_url']}"
+            cmd "git remote add #{f['owner']['login']} #{f['ssh_url']} 2> /dev/null"
           end
           break if forks.size == 0
         end
@@ -164,7 +163,9 @@ module GitHubBackup
 
       def cmd(line)
         logger.debug "shell '#{line}'"
-        %x{line}
+        system(line)
+        logger.debug "[done] shell '#{line}'"
+        logger.debug "#{$?}"
       end
 
       def json(url)
