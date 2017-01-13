@@ -1,7 +1,0 @@
-Release
-
-
-* update VERSION
-* update gemspec file
-* gem build github-backups.gemspec 
-* gem push XXX.gem
