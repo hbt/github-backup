@@ -51,8 +51,14 @@ github-backup -u hbt -o /tmp \n\n"
             self.options[:wiki] = true
           end
 
+          # // TODO(hbt) ENHANCE remove repack
           opts.on('-C', '--compress', 'Optional: run gc to compress git repo') do
             self.options[:repack] = true
+          end
+
+
+          opts.on('-D', '--debug', 'Optional: enable logging debug messages') do
+            self.options[:debug] = true
           end
 
           opts.on('-v', '--version', 'Displays current version ') do
