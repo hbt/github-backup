@@ -1,5 +1,6 @@
-#netbeans
+#ide
 /nbproject/
+.idea
 
 # rcov generated
 coverage

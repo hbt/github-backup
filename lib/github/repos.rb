@@ -11,6 +11,7 @@ module GitHubBackup
 
             def backup_repos()
                 # get all repos
+              # // TODO(hbt) ENHANCE limited to 100 repos? or does it paginate?
                 (1..100).each do |i|
                     if opts[:organization]
                       url = "/orgs/#{opts[:organization]}/repos"
@@ -23,6 +24,7 @@ module GitHubBackup
                     repos.each do |f|
                         # do we limit to a specific repo?
                         next unless f['name'] == opts[:reponame] if opts[:reponame]
+                        # // TODO(hbt) ENHANCE merge skip-forked
                         backup_repo f
                     end
                     break if repos.size == 0
@@ -45,11 +47,13 @@ module GitHubBackup
             end
             
             def clone(repo)
+              # // TODO(hbt) ENHANCE git clone recursive with submodules init?
                 %x{git clone #{repo['ssh_url']}}
             end
 
             def fetch_changes(repo)
-                Dir.chdir(repo['repo_path']) 
+                Dir.chdir(repo['repo_path'])
+                # // TODO(hbt) ENHANCE use git fetch --all to include forks remotes
                 %x{git fetch origin}
             end
             
@@ -76,6 +80,7 @@ module GitHubBackup
 
             def create_all_branches(repo)
                 Dir.chdir(repo['repo_path']) 
+                # // TODO(hbt) ENHANCE verify checkout with set-track
                 %x{for remote in `git branch -r`; do git branch --track $remote; done}
             end
 
@@ -116,6 +121,8 @@ module GitHubBackup
             end
 
             def json(url)
+              # // TODO(hbt) ENHANCE inv using token
+              # // TODO(hbt) ENHANCE review github api changes
                 auth = {:username => opts[:username], :password => opts[:passwd]} if opts[:username] and opts[:passwd]
                 HTTParty.get('https://api.github.com' << url, :basic_auth => auth, :headers => { "User-Agent" => "Get out of the way, Github" }).parsed_response
             end
