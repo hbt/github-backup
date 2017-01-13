@@ -39,7 +39,7 @@ module GitHubBackup
 
       def backup_repos()
         # get all repos
-        
+
         (1..100).each do |i|
           if opts[:organization]
             url = "/orgs/#{opts[:organization]}/repos"
@@ -68,7 +68,7 @@ module GitHubBackup
         repo['repo_path'] = "#{opts[:bakdir]}/#{repo['name']}"
 
         clone repo unless File.exists?(repo['repo_path'])
-        get_forks repo if opts[:forks] and repo['forks'] > 1
+        get_forks repo if opts[:forks] and (repo['forks_count'] > 0 || repo['fork'] == true)
         fetch_changes repo
         dump_issues repo if opts[:issues] && repo['has_issues']
         dump_wiki repo if opts[:wiki] && repo['has_wiki']
@@ -87,25 +87,42 @@ module GitHubBackup
         cmd "git fetch --all --recurse-submodules=yes"
       end
 
+      def get_all_forks(source_repo_full_name)
+        ret = []
+        (1..100).each do |i|
+          url = ("/repos/#{source_repo_full_name}/forks")
+          forks = json("#{url}?page=#{i}&per_page=100")
+          
+          forks.each do |f|
+            ret.push(f['full_name'])
+            if(f['forks_count'] > 0)
+              ret.push(*get_all_forks(f['full_name']))
+            end
+          end
+          break if forks.size == 0
+        end
+
+        ret
+      end
+
       def get_forks(repo)
         Dir.chdir(repo['repo_path'])
         logger.info "fetch all forks"
 
-        # // TODO(hbt) ENHANCE retrieve all forks including from the forked parent repo
-        # do we get all forks
-        (1..100).each do |i|
-          # // TODO(hbt) ENHANCE review organization implementation. 
-          if opts[:organization]
-            url = "/repos/#{opts[:organization]}/#{repo['name']}/forks"
-          else
-            url = "/repos/#{opts[:username]}/#{repo['name']}/forks"
-          end
-          forks = json("#{url}?page=#{i}&per_page=100")
-          logger.info "for each fork, add remotes"
-          forks.each do |f|
-            cmd "git remote add #{f['owner']['login']} #{f['ssh_url']} 2> /dev/null"
-          end
-          break if forks.size == 0
+        # source repo is different from parent. parent is direct parent of fork, source is the grand parent of all
+        repo = json("/repos/#{repo['full_name']}")
+        source_repo = (repo['fork'] == true && json("/repos/#{repo['source']['full_name']}")) || repo
+        logger.debug "retrieving forks from source #{source_repo['full_name']}"
+        
+        logger.info "fetching forks network"
+        forks = get_all_forks(source_repo['full_name'])
+        logger.debug "NB forks vs source_repo forks count: #{forks.size} vs #{source_repo['forks_count']}"
+
+        logger.info "for each fork, add remotes"
+        forks.each do |f|
+            user,repo = f.split "/"
+            sshurl = "git@github.com:#{user}/#{repo}.git"
+            cmd "git remote add #{user} #{sshurl} 2> /dev/null"
         end
       end
 
