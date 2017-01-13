@@ -8,9 +8,7 @@ Command-line tool to backup data from github
 ## Copies 
 
 * user and organization repositories (with submodules)
-* forks
-* starred repositories (cloned)
-* watched  repositories (cloned)
+* forks (whole network)
 * issues (into a JSON file per repository)
 * wiki (cloned)
 * gists (cloned)
