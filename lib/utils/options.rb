@@ -39,6 +39,10 @@ github-backup -u hbt -o /tmp \n\n"
             self.options[:forks] = true
           end
 
+          opts.on('-F', '--skip-forked', 'Optional: skip forked repositories.') do
+            self.options[:skip_forked] = true
+          end
+
           opts.on('-i', '--dump-issues', 'Optional: dump all issues into a file') do
             self.options[:issues] = true
           end

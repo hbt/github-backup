@@ -51,8 +51,9 @@ module GitHubBackup
           repos = json("#{url}?page=#{i}&per_page=100")
           repos.each do |f|
             # do we limit to a specific repo?
+            logger.debug "processing - #{f['name']}"
             next unless f['name'] == opts[:reponame] if opts[:reponame]
-            # // TODO(hbt) ENHANCE merge skip-forked
+            next if f['fork'] == true if opts[:skip_forked]
             backup_repo f
           end
           break if repos.size == 0
