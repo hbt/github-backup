@@ -39,6 +39,7 @@ module GitHubBackup
 
       def backup_repos()
         # get all repos
+        
         (1..100).each do |i|
           if opts[:organization]
             url = "/orgs/#{opts[:organization]}/repos"
@@ -71,7 +72,7 @@ module GitHubBackup
         fetch_changes repo
         dump_issues repo if opts[:issues] && repo['has_issues']
         dump_wiki repo if opts[:wiki] && repo['has_wiki']
-        
+
         logger.info "[done] backup repository #{repo['full_name']}"
       end
 
@@ -136,7 +137,7 @@ module GitHubBackup
       def dump_wiki(repo)
         Dir.chdir(opts[:bakdir])
         logger.info "clone wiki"
-        
+
         wiki_path = "#{opts[:bakdir]}/#{repo['name']}.wiki"
         %x{git clone git@github.com:#{repo['owner']['login']}/#{repo['name']}.wiki.git} unless File.exists?(wiki_path)
         if File.exists? wiki_path
@@ -154,12 +155,15 @@ module GitHubBackup
 
       def json(url)
         # // TODO(hbt) ENHANCE inv using token
-        # // TODO(hbt) ENHANCE review github api changes
         auth = {:username => opts[:username], :password => opts[:passwd]} if opts[:username] and opts[:passwd]
         url = 'https://api.github.com' << url
         logger.debug "Authentication data: #{auth}, API URL: #{url}"
-        HTTParty.get(url, :basic_auth => auth, :headers => {"User-Agent" => "Get out of the way, Github"}).parsed_response
-        # // TODO(hbt) ENHANCE add error message handling
+        ret = HTTParty.get(url, :basic_auth => auth, :headers => {"User-Agent" => "Get out of the way, Github"}).parsed_response
+        if ret.is_a?(Hash) && ret.has_key?('message')
+          logger.error "invalid API call - #{url} - #{ret['message']}"
+          abort("invalid API call")
+        end
+        ret
       end
     end
   end
